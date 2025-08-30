@@ -1,0 +1,351 @@
+//fact data//
+const environmentalFacts = [
+  "A single tree can absorb 48 pounds of CO2 per year and produce enough oxygen for two people.",
+  "Recycling one aluminum can saves enough energy to power a TV for 3 hours.",
+  "The average American throws away 4.5 pounds of trash every day.",
+  "Ocean plastic pollution kills over 1 million seabirds and 100,000 marine mammals annually.",
+  "LED bulbs use 75% less energy than incandescent bulbs and last 25 times longer.",
+  "Deforestation accounts for 15% of global greenhouse gas emissions.",
+  "A single solar panel can prevent 100,000 pounds of CO2 over 20 years.",
+  "Composting can reduce household waste by up to 30%.",
+  "Electric vehicles produce 60% fewer emissions than gasoline cars over their lifetime.",
+  "Renewable energy sources now provide 26% of global electricity generation.",
+]
+const themeToggle = document.getElementById("themeToggle")
+const body = document.body
+const currentTheme = localStorage.getItem("theme") || "light"
+if (currentTheme === "dark") {
+  body.setAttribute("data-theme", "dark")
+  themeToggle.innerHTML = '<i class="fas fa-sun"></i>'
+}
+themeToggle.addEventListener("click", () => {
+  const currentTheme = body.getAttribute("data-theme")
+  if (currentTheme === "dark") {
+    body.removeAttribute("data-theme")
+    themeToggle.innerHTML = '<i class="fas fa-moon"></i>'
+    localStorage.setItem("theme", "light")
+  } else {
+    body.setAttribute("data-theme", "dark")
+    themeToggle.innerHTML = '<i class="fas fa-sun"></i>'
+    localStorage.setItem("theme", "dark")
+  }
+})
+//custom cursor yaha rakexa//
+const cursor = document.querySelector(".cursor")
+const cursorFollower = document.querySelector(".cursor-follower")
+
+document.addEventListener("mousemove", (e) => {
+  cursor.style.left = e.clientX + "px"
+  cursor.style.top = e.clientY + "px"
+
+  setTimeout(() => {
+    cursorFollower.style.left = e.clientX + "px"
+    cursorFollower.style.top = e.clientY + "px"
+  }, 100)
+})
+
+//suruko screen//
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    document.getElementById("welcomeScreen").classList.add("fade-out")
+  }, 3500)
+})
+
+const hamburger = document.getElementById("hamburger")
+const navMenu = document.getElementById("navMenu")
+
+hamburger.addEventListener("click", () => {
+  navMenu.classList.toggle("active")
+})
+
+// Smooth Scrolling
+document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+  anchor.addEventListener("click", function (e) {
+    e.preventDefault()
+    const target = document.querySelector(this.getAttribute("href"))
+    if (target) {
+      target.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      })
+    }
+    navMenu.classList.remove("active")
+  })
+})
+
+// Scroll Reveal Animation
+const revealElements = document.querySelectorAll(".reveal")
+
+const revealOnScroll = () => {
+  revealElements.forEach((element) => {
+    const elementTop = element.getBoundingClientRect().top
+    const elementVisible = 150
+
+    if (elementTop < window.innerHeight - elementVisible) {
+      element.classList.add("active")
+    }
+  })
+}
+
+window.addEventListener("scroll", revealOnScroll)
+
+// Scroll to Top Button
+const scrollTopBtn = document.getElementById("scrollTop")
+
+window.addEventListener("scroll", () => {
+  if (window.pageYOffset > 300) {
+    scrollTopBtn.classList.add("visible")
+  } else {
+    scrollTopBtn.classList.remove("visible")
+  }
+})
+
+scrollTopBtn.addEventListener("click", () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  })
+})
+
+// Particles Animation
+const particlesContainer = document.getElementById("particles")
+
+function createParticle() {
+  const particle = document.createElement("div")
+  particle.classList.add("particle")
+  particle.style.left = Math.random() * 100 + "%"
+  particle.style.animationDelay = Math.random() * 6 + "s"
+  particle.style.animationDuration = Math.random() * 3 + 3 + "s"
+  particlesContainer.appendChild(particle)
+
+  setTimeout(() => {
+    particle.remove()
+  }, 6000)
+}
+
+// Create particles periodically
+setInterval(createParticle, 300)
+
+// Fact of the Day functionality
+const dailyFactElement = document.getElementById("dailyFact")
+const refreshFactBtn = document.getElementById("refreshFact")
+
+function displayRandomFact() {
+  const randomIndex = Math.floor(Math.random() * environmentalFacts.length)
+  dailyFactElement.textContent = environmentalFacts[randomIndex]
+}
+
+// Display initial fact
+displayRandomFact()
+
+refreshFactBtn.addEventListener("click", () => {
+  refreshFactBtn.style.transform = "rotate(360deg)"
+  setTimeout(() => {
+    displayRandomFact()
+    refreshFactBtn.style.transform = "rotate(0deg)"
+  }, 300)
+})
+
+// Gallery Modal functionality
+const galleryItems = document.querySelectorAll(".gallery-item")
+const galleryModal = document.getElementById("galleryModal")
+const modalImage = document.getElementById("modalImage")
+const modalTitle = document.getElementById("modalTitle")
+const modalDescription = document.getElementById("modalDescription")
+const closeModal = document.getElementById("closeModal")
+
+galleryItems.forEach((item) => {
+  item.addEventListener("click", () => {
+    const img = item.querySelector(".gallery-image")
+    const overlay = item.querySelector(".gallery-overlay")
+    const title = overlay.querySelector("h4").textContent
+    const description = overlay.querySelector("p").textContent
+
+    modalImage.src = img.src
+    modalImage.alt = img.alt
+    modalTitle.textContent = title
+    modalDescription.textContent = description
+    galleryModal.style.display = "block"
+  })
+})
+
+closeModal.addEventListener("click", () => {
+  galleryModal.style.display = "none"
+})
+
+galleryModal.addEventListener("click", (e) => {
+  if (e.target === galleryModal) {
+    galleryModal.style.display = "none"
+  }
+})
+
+// Challenge participation functionality
+const joinChallengeButtons = document.querySelectorAll(".join-challenge")
+
+joinChallengeButtons.forEach((button) => {
+  button.addEventListener("click", function () {
+    const challengeCard = this.closest(".challenge-card")
+    const challengeName = challengeCard.querySelector("h3").textContent
+
+    // Simulate joining challenge
+    this.textContent = "Joined!"
+    this.style.background = "#28a745"
+    this.disabled = true
+
+    // Show success message
+    setTimeout(() => {
+      alert(
+        `Congratulations! You've joined the "${challengeName}". Check your email for challenge details and tracking information.`,
+      )
+    }, 500)
+
+    // Update progress bar (simulate)
+    const progressFill = challengeCard.querySelector(".progress-fill")
+    const currentWidth = Number.parseInt(progressFill.style.width)
+    progressFill.style.width = currentWidth + 1 + "%"
+  })
+})
+
+// Form Submission
+document.querySelector(".contact-form").addEventListener("submit", function (e) {
+  e.preventDefault()
+
+  // Add loading state
+  const submitBtn = this.querySelector(".submit-btn")
+  const originalText = submitBtn.textContent
+  submitBtn.textContent = "Sending..."
+  submitBtn.disabled = true
+
+  // Simulate form submission
+  setTimeout(() => {
+    alert("Thank you for your message! We'll get back to you soon.")
+    this.reset()
+    submitBtn.textContent = originalText
+    submitBtn.disabled = false
+  }, 2000)
+})
+
+// Add hover effects to interactive elements
+document.querySelectorAll(".cta-button, .submit-btn, .issue-card, .solution-item, .glow-button").forEach((element) => {
+  element.addEventListener("mouseenter", () => {
+    cursor.style.transform = "translate(-50%, -50%) scale(1.5)"
+    cursor.style.backgroundColor = "rgba(127,176,105,0.3)"
+  })
+
+  element.addEventListener("mouseleave", () => {
+    cursor.style.transform = "translate(-50%, -50%) scale(1)"
+    cursor.style.backgroundColor = "transparent"
+  })
+})
+
+// Navbar background on scroll
+window.addEventListener("scroll", () => {
+  const navbar = document.getElementById("navbar")
+  if (window.scrollY > 100) {
+    navbar.style.background =
+      document.body.getAttribute("data-theme") === "dark" ? "rgba(26,26,26,0.98)" : "rgba(255,255,255,0.98)"
+  } else {
+    navbar.style.background =
+      document.body.getAttribute("data-theme") === "dark" ? "rgba(26,26,26,0.95)" : "rgba(255,255,255,0.95)"
+  }
+})
+
+// Timeline progress animation
+const timelineItems = document.querySelectorAll(".timeline-item")
+const timelineObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = "1"
+        entry.target.style.transform = "translateY(0)"
+      }
+    })
+  },
+  { threshold: 0.1 },
+)
+
+timelineItems.forEach((item) => {
+  item.style.opacity = "0"
+  item.style.transform = "translateY(30px)"
+  item.style.transition = "all 0.6s ease"
+  timelineObserver.observe(item)
+})
+
+// Audio player enhancements
+const audioPlayer = document.querySelector(".audio-player")
+if (audioPlayer) {
+  audioPlayer.addEventListener("play", () => {
+    console.log("[v0] Environmental podcast started playing")
+  })
+
+  audioPlayer.addEventListener("pause", () => {
+    console.log("[v0] Environmental podcast paused")
+  })
+}
+
+// Research article interactions
+const readMoreButtons = document.querySelectorAll(".read-more")
+readMoreButtons.forEach((button) => {
+  button.addEventListener("click", (e) => {
+    e.preventDefault()
+    const article = button.closest(".research-card")
+    const title = article.querySelector("h3").textContent
+    alert(
+      `Opening full article: "${title}"\n\nThis would typically open the full research paper or redirect to the publication.`,
+    )
+  })
+})
+
+// Progress bar animations
+const progressBars = document.querySelectorAll(".progress-fill")
+const progressObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const progressBar = entry.target
+        const targetWidth = progressBar.style.width
+        progressBar.style.width = "0%"
+        setTimeout(() => {
+          progressBar.style.width = targetWidth
+        }, 200)
+      }
+    })
+  },
+  { threshold: 0.5 },
+)
+
+progressBars.forEach((bar) => {
+  progressObserver.observe(bar)
+})
+
+// Initialize reveal animation on load
+revealOnScroll()
+
+// Add keyboard navigation support
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && galleryModal.style.display === "block") {
+    galleryModal.style.display = "none"
+  }
+})
+
+// Performance optimization: Lazy load images
+const images = document.querySelectorAll('img[src*="placeholder"]')
+const imageObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      const img = entry.target
+      img.style.opacity = "0"
+      img.style.transition = "opacity 0.3s ease"
+      setTimeout(() => {
+        img.style.opacity = "1"
+      }, 100)
+      imageObserver.unobserve(img)
+    }
+  })
+})
+
+images.forEach((img) => {
+  imageObserver.observe(img)
+})
+
+console.log("[v0] EcoGuardian website fully loaded and interactive")
