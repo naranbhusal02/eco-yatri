@@ -26,7 +26,7 @@ themeToggle.addEventListener("click", () => {
 })
 
 
-onst cursor = document.querySelector(".cursor")
+const cursor = document.querySelector(".cursor")
 const cursorFollower = document.querySelector(".cursor-follower")
 
 document.addEventListener("mousemove", (e) => {
