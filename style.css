@@ -810,6 +810,9 @@ body {
   margin-bottom: 0.5rem;
 }
 
+.section-title reveal glow-text{
+  color: white;
+}
 /* Gallery Modal */
 .gallery-modal {
   display: none;
