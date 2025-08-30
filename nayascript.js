@@ -57,7 +57,6 @@ const navMenu = document.getElementById("navMenu")
 hamburger.addEventListener("click", () => {
   navMenu.classList.toggle("active")
 })
-
 // Smooth Scrolling
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   anchor.addEventListener("click", function (e) {
@@ -72,7 +71,6 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     navMenu.classList.remove("active")
   })
 })
-
 // Scroll Reveal Animation
 const revealElements = document.querySelectorAll(".reveal")
 
@@ -271,8 +269,6 @@ timelineItems.forEach((item) => {
   timelineObserver.observe(item)
 })
 
-// Audio player enhancements
-const audioPlayer = document.querySelector(".audio-player")
 if (audioPlayer) {
   audioPlayer.addEventListener("play", () => {
     console.log("[v0] Environmental podcast started playing")
@@ -296,7 +292,7 @@ readMoreButtons.forEach((button) => {
   })
 })
 
-// Progress bar animations
+//progress bar animations//
 const progressBars = document.querySelectorAll(".progress-fill")
 const progressObserver = new IntersectionObserver(
   (entries) => {
@@ -318,17 +314,13 @@ progressBars.forEach((bar) => {
   progressObserver.observe(bar)
 })
 
-// Initialize reveal animation on load
 revealOnScroll()
 
-// Add keyboard navigation support
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && galleryModal.style.display === "block") {
     galleryModal.style.display = "none"
   }
 })
-
-// Performance optimization: Lazy load images
 const images = document.querySelectorAll('img[src*="placeholder"]')
 const imageObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
